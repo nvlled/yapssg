@@ -1,0 +1,46 @@
+
+body {
+    background-color: #333;
+    color: white;
+    font-size: 19px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(200, 200, 200, 0), rgba(200, 200, 200, 0.75), rgba(200, 200, 200, 0));
+}
+
+a {
+    color: #aff;
+    text-decoration: none;
+}
+
+.site-wrapper {
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+.post-container {
+    padding: 5px;
+    color: #dee;
+    background-color: #444;
+}
+.post-title {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.markdown-content {
+    padding: 10px;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h1
+{
+    font-size: 100%;
+}
