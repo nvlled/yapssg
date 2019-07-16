@@ -1,11 +1,12 @@
 #!/usr/bin/env php
 <?php
 chdir(dirname(dirname(__FILE__)));
+require_once ("lib/slug.php");
 
 function nextID() {
     $maxID = 0;
     foreach (glob("post-*.php") as $filename) {
-        $n = preg_match("/post-([0-9]*)\.php/", $filename, $m);
+        $n = preg_match("/post-([0-9]*).*\.php/", $filename, $m);
         if ($n <= 0) {
             continue;
         }
@@ -15,6 +16,13 @@ function nextID() {
         }
     };
     return $maxID + 1;
+}
+
+function postExists($id) {
+    foreach (glob("post-$id-*.php") as $_) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -36,16 +44,18 @@ if (!$id) {
     exit;
 }
 
-$filename = "post-$id.php";
 
-if (file_exists("$filename")) {
+if (postExists($id)) {
     echo "post id=$id is already used.\n";
     exit;
 }
 
+$slugTitle = generateUrlSlug($title);
+$filename = "post-$id-$slugTitle.php";
+
 $contents = "
 <?php
-require_once('lib/index.php');
+require_once('lib/yapssg.php');
 
 \$post = [
     'id' => $id,

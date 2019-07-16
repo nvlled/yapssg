@@ -20,6 +20,7 @@ function recurse_copy($src,$dst) {
 
 
 function main() {
+    require_once("lib/yapssg.php");
     $GLOBALS["DEPLOY"] = true;
     $deploy = true;
     chdir(dirname(dirname(__FILE__)));

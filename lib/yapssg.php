@@ -1,9 +1,8 @@
 <?php
+require_once("slug.php");
 require_once("config.php");
 require_once("layout.php");
 require_once("Parsedown.php");
-
-$deploy = false;
 
 function mdFile($postID)
 {
@@ -25,17 +24,20 @@ function md($markdown)
 
 function allPosts()
 {
+    if (@$GLOBALS["ALL_POSTS"]) {
+        return $GLOBALS["ALL_POSTS"];
+    }
+
     $posts = [];
 
     foreach (glob("post-*.php") as $filename) {
-        ob_start();
-        include $filename;
-        ob_end_clean();
-        //$content = file_get_contents($filename);
-        //$q = '[\'"]';
-        ////preg_match("/{$q}title$q.*=>.*{$q}(.*){$q}.*,/", $content, $m);
-        //preg_match('/renderPost\(\[(.*)\]\);/ms', $content, $m);
-        //eval ("\$post = [{$m[1]}];");
+        $content = file_get_contents($filename);
+        preg_match('/\$post\s*=\s*\[(.*)\]\s*;/ms', $content, $m);
+        if (!$m) {
+            preg_match('/renderPost\s*\(\s*\[\s*(.*)\s*\]\s*\);/ms', $content, $m);
+        }
+        eval("\$post = [{$m[1]}];");
+
         if ($post && $post['id'] && !@$post["draft"]) {
             array_push($posts, $post);
         }
@@ -45,21 +47,13 @@ function allPosts()
         return $b['date'] <=> $a['date'];
     });
 
-    //$prevPost = null;
-    //foreach ($posts as $post) {
-    //    if ($prevPost) {
-    //        $prevPost["next"] = $post;
-    //        $post["prev"] = $prevPost;
-    //    }
-    //    $prevPost = $post;
-    //}
-
-    // TODO: order by date, and slice to count
+    $GLOBALS["ALL_POSTS"] = $posts;
     return $posts;
 }
 
-function adjacentPosts($posts, $id)
+function adjacentPosts($id)
 {
+    $posts = allPosts();
     $index = null;
     foreach ($posts as $i => $post) {
         if ($post["id"] == $id) {
@@ -90,20 +84,20 @@ function recentPosts($count=5)
     return array_slice(allPosts(), 0, $count);
 }
 
-function postlink($id)
+function postlink($post)
 {
-    if ($GLOBALS['DEPLOY']) {
-        return "post-$id.html";
+    $id = $post["id"];
+    $title = generateUrlSlug($post["title"]);
+    if (@$GLOBALS['DEPLOY']) {
+        return "post-$id-$title.html";
     }
-    return "post-$id.php";
+    return "post-$id-$title.php";
 }
 
 function pagelink($path)
 {
-    if ($GLOBALS['DEPLOY']) {
+    if (@$GLOBALS['DEPLOY']) {
         return "$path.html";
     }
     return "$path.php";
 }
-
-$ALL_POSTS = allPosts();

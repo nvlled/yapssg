@@ -16,14 +16,34 @@ a {
     color: #aff;
     text-decoration: none;
 }
+h1, h2, h3, h4, h5 {
+    margin: 1px;
+    padding: 1px;
+}
+
+.site-name {
+    font-size: 35px;
+}
+.site-header {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #555;
+}
 
 .site-wrapper {
     max-width: 800px;
     margin: 10px auto;
 }
+.site-content {
+    min-height: 250px;
+    padding: 5px;
+    background-color: #444;
+}
+footer {
+    text-align: center;
+    border-top: 1px solid #555;
+}
 
 .post-container {
-    padding: 5px;
     color: #dee;
     background-color: #444;
 }
@@ -42,5 +62,10 @@ a {
 .markdown-content h4,
 .markdown-content h1
 {
-    font-size: 100%;
+    font-size: 140%;
+}
+
+code {
+    background-color: #224;
+    padding: 2px;
 }

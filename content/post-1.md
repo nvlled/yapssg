@@ -1,32 +1,9 @@
 
-# Introduction
+Greetings. This is a minimal, zero depedency static site general in PHP.
+You just write normal PHP, then deploy to static HTML when your done.
+No fancy tooling, it's all in the bin folder.
 
-This is an example page that is also
-an instruction how to use.
-
-## Adding new post
-To add a new post, run the following:
-
-```
-$ title='your title' ./bin/new-post.php
-```
-Two files will be created, a php file and a markdown file in the content/ directory.
-
-
----
-
-## Linking to other pages
-To make internal links work both on developement and production,
-use the following helper functions: (see index.php for example usage)
-```
-postlink($postID)
-pagelink('name-of-php-file') # without file extension
-```
-
----
-
-## Deployment
-To generate html files for deployment, run:
-```
-$ ./bin/build.php
-```
+Big caveat, I wrote this out of frustration on existing 
+overcomplicated SSGs that fails unexpectedly for no reason.
+I wrote this for personal use. For strange use-cases that I didn't
+have in mind, it may result in unexpected consequences.

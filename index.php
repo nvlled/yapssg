@@ -1,19 +1,19 @@
 <?php
-require_once("lib/index.php");
+require_once("lib/yapssg.php");
 
-render([], function () { ?>
-
-<h3>Recent Posts</h3>
+render([], function () {
+    
+    $numPosts = 5;
+    ?>
 
 <ul>
-<?php foreach (recentPosts() as $post) { ?>
+<?php foreach (array_reverse(allPosts()) as $post) { ?>
 <li>
-    <a href="<?=postlink($post['id'])?>"><?=$post["title"] ?? 'untitled post ' . $post['id'] ?></a>
+    <a href="<?=postlink($post)?>"><?=$post["title"] ?? 'untitled post ' . $post['id'] ?></a>
 </li>
 <?php } ?>
 </ul>
-<a href="<?=pagelink('/all-posts')?>">view all</a> |
-<a href="<?=pagelink('/about')?>">about</a>
+<a href="<?=pagelink('about')?>">about</a>
 
 
 <?php });
