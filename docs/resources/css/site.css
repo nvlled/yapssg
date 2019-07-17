@@ -38,6 +38,17 @@ h1, h2, h3, h4, h5 {
     padding: 5px;
     background-color: #444;
 }
+
+.site-nav {
+    text-align: right;
+}
+.site-nav > *::after {
+    content: " | "
+}
+.site-nav a:last-child::after {
+    content: " ";
+}
+
 footer {
     text-align: center;
     border-top: 1px solid #555;
@@ -69,3 +80,4 @@ code {
     background-color: #224;
     padding: 2px;
 }
+
