@@ -30,6 +30,7 @@ function render($args, $body)
 <?php
 }
 
+
 function renderPost($post)
 {
     render([

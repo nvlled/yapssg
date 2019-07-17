@@ -1,16 +1,16 @@
 #!/usr/bin/env php
 <?php
 
-function recurse_copy($src,$dst) {
+function recurse_copy($src, $dst)
+{
     $dir = opendir($src);
     @mkdir($dst);
-    while(false !== ( $file = readdir($dir)) ) {
-        if (( $file != '.' ) && ( $file != '..' )) {
-            if ( is_dir($src . '/' . $file) ) {
-                recurse_copy($src . '/' . $file,$dst . '/' . $file);
-            }
-            else {
-                copy($src . '/' . $file,$dst . '/' . $file);
+    while (false !== ($file = readdir($dir))) {
+        if (($file != '.') && ($file != '..')) {
+            if (is_dir($src . '/' . $file)) {
+                recurse_copy($src . '/' . $file, $dst . '/' . $file);
+            } else {
+                copy($src . '/' . $file, $dst . '/' . $file);
             }
         }
     }
@@ -19,23 +19,35 @@ function recurse_copy($src,$dst) {
 
 
 
-function main() {
+function main()
+{
     require_once("lib/yapssg.php");
     $GLOBALS["DEPLOY"] = true;
     $deploy = true;
     chdir(dirname(dirname(__FILE__)));
 
+    $posts = postMap();
+
     @mkdir("build");
     echo "# rendering php to html\n";
     foreach (glob("*.php") as $filename) {
-        echo "> $filename\n";
         ob_start();
         include($filename);
         $html = ob_get_contents();
         ob_end_clean();
 
-        $htmlFilename = preg_replace("/\\.php$/i", ".html", $filename);
-        file_put_contents("build/$htmlFilename", $html);
+        preg_match("/post-([0-9])+\.php/", $filename, $m);
+        $postID = @$m["1"];
+
+        $post = @$posts[$postID];
+        if (!$post) {
+            $destFilename = preg_replace("/\\.php$/i", ".html", $filename);
+        } else {
+            $title = generateUrlSlug($post['title']);
+            $destFilename = "post-{$post['id']}-{$title}.html";
+        }
+        echo "> build/$destFilename\n";
+        file_put_contents("build/$destFilename", $html);
     }
     echo "done\n";
 

@@ -7,4 +7,6 @@ renderPost([
     'title' => 'Introduction',
     'date' => 1563248812,
     'description' => '',
+    'category' => 'blog',
+    'tags' => ['hello', 'intro'],
 ]);

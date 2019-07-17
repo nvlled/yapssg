@@ -51,6 +51,14 @@ function allPosts()
     return $posts;
 }
 
+function postMap() {
+    $posts = [];
+    foreach (allPosts() as $post) {
+        $posts[$post["id"]] = $post;
+    }
+    return $posts;
+}
+
 function adjacentPosts($id)
 {
     $posts = allPosts();
@@ -91,7 +99,7 @@ function postlink($post)
     if (@$GLOBALS['DEPLOY']) {
         return "post-$id-$title.html";
     }
-    return "post-$id-$title.php";
+    return "post-$id.php";
 }
 
 function pagelink($path)
