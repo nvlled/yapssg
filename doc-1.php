@@ -3,9 +3,11 @@
 require_once('lib/yapssg.php');
 
 renderPost([
-    'id' => 2,
-    'title' => 'Raining',
-    'date' => 1563341879,
+    'id' => 1,
+    'title' => 'Introduction',
+    'date' => 1563248812,
     'description' => '',
+    'tags' => ['hello', 'intro'],
+
     'category' => getCategoryByFilename(__FILE__),
 ]);

@@ -36,15 +36,16 @@ function main()
         $html = ob_get_contents();
         ob_end_clean();
 
-        preg_match("/post-([0-9])+\.php/", $filename, $m);
-        $postID = @$m["1"];
+        $filenameData = parsePageFilename($filename);
+        $category = @$filenameData["category"];
+        $postID = @$filenameData["id"];
 
-        $post = @$posts[$postID];
+        $post = @$posts["$category-$postID"];
         if (!$post) {
             $destFilename = preg_replace("/\\.php$/i", ".html", $filename);
         } else {
             $title = generateUrlSlug($post['title']);
-            $destFilename = "post-{$post['id']}-{$title}.html";
+            $destFilename = "$category-{$post['id']}-{$title}.html";
         }
         echo "> build/$destFilename\n";
         file_put_contents("build/$destFilename", $html);

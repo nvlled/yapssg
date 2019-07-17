@@ -16,7 +16,7 @@ function render($args, $body)
 <head>
 <div class="site-wrapper">
     <header class="site-header">
-        <a class="site-name" href="<?=pagelink("index")?>"><?= SITE_NAME ?></a>
+        <a class="site-name" href="<?=sitelink("index")?>"><?= SITE_NAME ?></a>
         <span class="site-desc"><?= SITE_DESC ?></span>
     </header>
     <div class="site-content">
@@ -30,15 +30,16 @@ function render($args, $body)
 <?php
 }
 
-
 function renderPost($post)
 {
     render([
         "title" => @$post['title'],
     ], function () use ($post) {
+        // TODO: move in allPost
         $adjacent = @adjacentPosts($post["id"]);
         $prevPost = @$adjacent["prev"];
-        $nextPost = @$adjacent["next"]; ?>
+        $nextPost = @$adjacent["next"];
+        ?>
 <div class="post-container">
     <div class="post-title"><?=@$post['title']?></div>
     <div class="post-description"><?=@$post['description']?></div>
@@ -47,7 +48,7 @@ function renderPost($post)
     <div class="post-content">
         <?= @$post["content"] ?>
         <?php if (@$post["id"]) { ?>
-            <?= mdFile($post["id"]) ?>
+            <?= mdFile($post["id"], $post["category"]) ?>
         <?php } ?>
     </div>
 
@@ -63,4 +64,5 @@ function renderPost($post)
 <?php
     });
 }
+
 ?>

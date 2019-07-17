@@ -1,9 +1,10 @@
 
-Greetings. This is a minimal, zero depedency static site general in PHP.
-You just write normal PHP, then deploy to static HTML when your done.
-No fancy tooling, it's all in the bin folder.
+I've made some changes so that posts can be categoried by filename.
+So there would be the general post-1.php posts, then maybe
+some docs-1.php posts, etc. It was tricky change to make.
+I tried all sorts of stuffs, including debug_backtrace().
+I wanted to avoid being redundant when specifying category,
+one in the file contents, and in the filename.
 
-Big caveat, I wrote this out of frustration on existing 
-overcomplicated SSGs that fails unexpectedly for no reason.
-I wrote this for personal use. For strange use-cases that I didn't
-have in mind, it may result in unexpected consequences.
+In the end, I resorted to just doing getCategoryByFilename(\__FILE__),
+which isn't too bad. All this trouble is due to the no-database approach.

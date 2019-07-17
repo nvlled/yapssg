@@ -3,10 +3,10 @@
 chdir(dirname(dirname(__FILE__)));
 require_once ("lib/slug.php");
 
-function nextID() {
+function nextID($category="post") {
     $maxID = 0;
-    foreach (glob("post-*.php") as $filename) {
-        $n = preg_match("/post-([0-9]*).*\.php/", $filename, $m);
+    foreach (glob("$category-*.php") as $filename) {
+        $n = preg_match("/$category-([0-9]*).*\.php/", $filename, $m);
         if ($n <= 0) {
             continue;
         }
@@ -18,18 +18,26 @@ function nextID() {
     return $maxID + 1;
 }
 
-function postExists($id) {
-    foreach (glob("post-$id-*.php") as $_) {
+function postExists($id, $category="post") {
+    foreach (glob("$category-$id-*.php") as $_) {
         return true;
     }
     return false;
 }
 
-
 $id = getenv("id");
 $title = addslashes(getenv("title"));
 $description = addslashes(@getenv("description"));
+$category = @getenv("category");
 $date = time();
+
+if (!$category) {
+    $category = "post";
+}
+if (preg_match("/[^0-9a-zA-Z]/", $category)) {
+    echo "category must consist of alphanumeric characters only.\n";
+    exit;
+}
 
 if (!$title) {
     echo "set title in ENV\n";
@@ -38,41 +46,40 @@ if (!$title) {
 }
 
 if (!$id) {
-    $id = nextID();
+    $id = nextID($category);
 } else if (preg_match("/[^0-9]/", $id)) {
     echo "id must be an +integer\n";
     exit;
 }
 
 
-if (postExists($id)) {
-    echo "post id=$id is already used.\n";
+if (postExists($id, $category)) {
+    echo "$category id=$id is already used.\n";
     exit;
 }
 
-$slugTitle = generateUrlSlug($title);
-$filename = "post-$id-$slugTitle.php";
+$filename = "$category-$id.php";
 
 $contents = "
 <?php
 require_once('lib/yapssg.php');
 
-\$post = [
+renderPost([
     'id' => $id,
     'title' => '$title',
     'date' => $date,
     'description' => '$description',
-];
-renderPost(\$post);
+    'category' => getCategoryByFilename(__FILE__),
+]);
 ";
 
 file_put_contents($filename, $contents);
-file_put_contents("content/post-$id.md", "
+file_put_contents("content/$category-$id.md", "
 # Hello
 
-This is post $id.
+This is $category $id.
 
 Add more markdown content here.
 ");
 
-echo "post created with id=$id\n";
+echo "$category created with id=$id\n";
