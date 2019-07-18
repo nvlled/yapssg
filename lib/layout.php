@@ -32,14 +32,19 @@ function render($args, $body)
 
 function renderPost($post)
 {
+    $category = $post["category"];
+    $renderLayout = @$GLOBALS["categoryLayouts"][$category];
+    if ($renderLayout) {
+        $renderLayout($post);
+        return;
+    }
+
     render([
         "title" => @$post['title'],
     ], function () use ($post) {
-        // TODO: move in allPost
-        $adjacent = @adjacentPosts($post["id"]);
-        $prevPost = @$adjacent["prev"];
-        $nextPost = @$adjacent["next"];
-        ?>
+        $post = getPost($post["category"], $post["id"]);
+        $prevPost = @$post["prev"];
+        $nextPost = @$post["next"]; ?>
 <div class="post-container">
     <div class="post-title"><?=@$post['title']?></div>
     <div class="post-description"><?=@$post['description']?></div>
@@ -52,6 +57,7 @@ function renderPost($post)
         <?php } ?>
     </div>
 
+    <div class="post-nav">
     <?php if ($prevPost) { ?>
         <a href="<?=postlink($prevPost)?>">Previous: <?=$prevPost['title']?></a>
     <?php } ?>
@@ -59,10 +65,41 @@ function renderPost($post)
     <?php if ($nextPost) { ?>
         <a href="<?=postlink($nextPost)?>">Next: <?=$nextPost['title']?></a>
     <?php } ?>
+    </div>
 
 </div>
 <?php
     });
 }
+
+
+$categoryLayouts = [
+    "doc" => function ($post) {
+        render([
+        "title" => @$post['title'],
+    ], function () use ($post) {
+        $post = getPost($post["category"], $post["id"]);
+        $nextPost = @$post["next"]; ?>
+<div class="post-container">
+    <div class="post-title"><?=@$post['title']?></div>
+    <div class="post-description"><?=@$post['description']?></div>
+
+    <div class="post-content">
+        <?= @$post["content"] ?>
+        <?php if (@$post["id"]) { ?>
+            <?= mdFile($post["id"], $post["category"]) ?>
+        <?php } ?>
+    </div>
+
+    <?php if ($nextPost) { ?>
+        <a href="<?=postlink($nextPost)?>">Next: <?=$nextPost['title']?></a>
+    <?php } ?>
+
+</div>
+<?php
+    });
+    },
+];
+
 
 ?>

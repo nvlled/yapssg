@@ -26,19 +26,15 @@ function allPosts($categoryFilter="")
 {
     if (@$GLOBALS["ALL_POSTS"]) {
         $posts = $GLOBALS["ALL_POSTS"];
-        if ($categoryFilter == "") {
-            return $posts;
-        }
-        return array_filter($posts, function ($post) use ($categoryFilter) {
-            return $post["category"] == $categoryFilter;
-        });
+        return filterPostsByCategory($categoryFilter, $posts);
     }
 
     $posts = [];
 
+    $prevPosts = [];
+    $index = 0;
     foreach (glob("*-*.php") as $filename) {
         if (!preg_match("/([0-9a-zA-Z]+)-[0-9]+.php/", $filename, $match)) {
-            //echo "not a page: $filename, skipping<br>";
             continue;
         }
         $category = $match[1];
@@ -51,18 +47,28 @@ function allPosts($categoryFilter="")
         eval("\$post = [{$m[1]}];");
         $post["category"] = $category;
 
-
         if ($post && $post['id'] && !@$post["draft"]) {
-            array_push($posts, $post);
-        }
-    }
+            $prevPost = @$prevPosts[$category];
+            if ($prevPost) {
+                $post["prev"] = $prevPost;
+                $prevPost["next"] = $post;
+            }
 
-    usort($posts, function ($a, $b) {
-        return $b['date'] <=> $a['date'];
-    });
+            $post["index"] = $index;
+            $posts[$post["index"]] = $post;
+            $posts[$prevPost["index"]] = $prevPost;
+            $prevPosts[$category] = $post;
+        }
+        $index++;
+    }
 
     $GLOBALS["ALL_POSTS"] = $posts;
 
+    return filterPostsByCategory($categoryFilter, $posts);
+}
+
+function filterPostsByCategory($categoryFilter, $posts)
+{
     if ($categoryFilter == "") {
         return $posts;
     }
@@ -86,24 +92,16 @@ function postMap()
     return $posts;
 }
 
-function getPost($id) {
+function getPost($category, $id)
+{
     $posts = postMap();
-    return $posts[$id];
+    $k = "$category-$id";
+    return $posts[$k];
 }
 
 function adjacentPosts($id)
 {
     $posts = allPosts();
-    $index = null;
-    foreach ($posts as $i => $post) {
-        if ($post["id"] == $id) {
-            $index = $i;
-            break;
-        }
-    }
-    if ($index === null) {
-        return [];
-    }
     return [
         "prev" => @$posts[$index+1],
         "next" => @$posts[$index-1],
@@ -144,7 +142,8 @@ function sitelink($path)
 }
 
 
-function parsePageFilename($filename) {
+function parsePageFilename($filename)
+{
     $count = preg_match("/([0-9a-zA-Z]+)-([0-9])+\.php/", $filename, $m);
     if ($count == 0) {
         return null;
@@ -155,7 +154,16 @@ function parsePageFilename($filename) {
     ];
 }
 
-function getCategoryByFilename($filename) {
+function getCategoryByFilename($filename)
+{
     $data = parsePageFilename($filename);
     return $data["category"];
 }
+
+function sortByDate($posts)
+{
+    usort($posts, function ($a, $b) {
+        return $b['date'] <=> $a['date'];
+    });
+    return $posts;
+};

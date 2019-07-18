@@ -63,6 +63,14 @@ footer {
     font-weight: 700;
 }
 
+.post-nav {
+    display: flex;
+    justify-content: space-between;
+}
+.post-nav > * {
+    margin: 1px 10px;
+}
+
 .markdown-content {
     padding: 10px;
 }

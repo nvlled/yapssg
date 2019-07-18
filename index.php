@@ -13,7 +13,7 @@ render([], function () {
 
 <h1>Documentation</h1>
 <ul>
-<?php foreach (array_reverse(allPosts("doc")) as $post) { ?>
+<?php foreach (allPosts("doc") as $post) { ?>
 <li>
     <a href="<?=postlink($post)?>"><?=$post["title"] ?? 'untitled post ' . $post['id'] ?></a>
 </li>
@@ -22,7 +22,7 @@ render([], function () {
 
 <h1>Blog</h1>
 <ul>
-<?php foreach (array_reverse(allPosts("post")) as $post) { ?>
+<?php foreach (sortByDate(allPosts("post")) as $post) { ?>
 <li>
     <a href="<?=postlink($post)?>"><?=$post["title"] ?? 'untitled post ' . $post['id'] ?></a>
 </li>
