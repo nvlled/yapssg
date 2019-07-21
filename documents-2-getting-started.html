@@ -1,23 +1,32 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Getting started -- yapssg</title>
+
+    <link rel="stylesheet" href="resources/css/vendor/highlight.css">
+    <script src="resources/js/vendor/highlight.js"></script>
     <link rel="stylesheet" href="resources/css/site.css" />
-<head>
-<div class="site-wrapper">
-    <header class="site-header">
-        <a class="site-name" href="index.html">yapssg</a>
-        <span class="site-desc">Yet Another PHP Static Site Generator</span>
-    </header>
-    <div class="site-content">
-    <div class="post-container">
+
+    <head>
+        <div class="site-wrapper">
+            <header class="site-header">
+                <a class="site-name" href="index.html">yapssg</a>
+                <span class="site-desc">Yet Another PHP Static Site Generator</span>
+            </header>
+            <div class="site-content">
+                <div class="post-container">
+        <a href="index.html">Home</a>
+ >> <span>Documents</span>
+ >> <a href="documents-2-getting-started.html">Getting started</a>
     <div class="post-title">Getting started</div>
     <div class="post-description"></div>
+    <div class="post-date">Monday 15th of July 2019 08:49:16 PM</div>
 
     <div class="post-content">
-                            <div class='markdown-content'><h1>Prerequisites</h1>
+                        <div class='markdown-content'><h1>Prerequisites</h1>
 <ul>
 <li>git</li>
 <li>php7</li>
@@ -27,19 +36,19 @@
 <h1>Quick Start</h1>
 <ol>
 <li>
-<p><code>$ git clone https://github.com/nvlled/yapssg your-site-name</code></p>
+<pre><code class="language-sh">$ git clone https://github.com/nvlled/yapssg your-site-name</code></pre>
 </li>
 <li>
-<p><code>$ cd your-site-name</code></p>
+<pre><code class="language-sh">$ cd your-site-name</code></pre>
 </li>
 <li>
-<p><code>change site details in config.php</code></p>
+<pre><code class="language-sh">change site details in config.php</code></pre>
 </li>
 <li>
-<p><code>$ title='Hello world' ./bin/new-post</code></p>
+<pre><code class="language-sh">$ title='Hello world' ./bin/new-post</code></pre>
 </li>
 <li>
-<p>Edit created markdown file in content/</p>
+<pre><code class="language-sh">Edit created markdown file in content/</code></pre>
 </li>
 </ol>
 <h1>Development</h1>
@@ -65,12 +74,18 @@ use the following helper functions: (see index.php for example usage)</p>
 and link to them in your pages as you would normally do.
 For easier deployment, you should just use relative paths.</p></div>            </div>
 
-            <a href="doc-3-extending-and-modifying.html">Next: Extending and modifying</a>
-    
+    <div class="post-nav">
+                <a href="documents-1-introduction.html">Previous: Introduction</a>
+                <br>
+                <a href="documents-3-extending-and-modifying.html">Next: Extending and modifying</a>
+            </div>
+
 </div>
-    </div>
-    <footer>EOF</footer>
-</div>
-</body>
+            </div>
+            <footer>EOF</footer>
+        </div>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </body>
+
 </html>
 

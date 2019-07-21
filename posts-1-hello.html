@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello -- yapssg</title>
+
+    <link rel="stylesheet" href="resources/css/vendor/highlight.css">
+    <script src="resources/js/vendor/highlight.js"></script>
+    <link rel="stylesheet" href="resources/css/site.css" />
+
+    <head>
+        <div class="site-wrapper">
+            <header class="site-header">
+                <a class="site-name" href="index.html">yapssg</a>
+                <span class="site-desc">Yet Another PHP Static Site Generator</span>
+            </header>
+            <div class="site-content">
+                <div class="post-container">
+        <a href="index.html">Home</a>
+ >> <a href="posts.html">Posts</a>
+ >> <a href="posts-1-hello.html">Hello</a>
+    <div class="post-title">Hello</div>
+    <div class="post-description"></div>
+    <div class="post-date">Tuesday 16th of July 2019 10:37:22 PM</div>
+
+    <div class="post-content">
+                        <div class='markdown-content'><p>I've made some changes so that posts can be categoried by filename.
+So there would be the general post-1.php posts, then maybe
+some docs-1.php posts, etc. It was tricky change to make.
+I tried all sorts of stuffs, including debug_backtrace().
+I wanted to avoid being redundant when specifying category,
+one in the file contents, and in the filename.</p>
+<p>In the end, I resorted to just doing getCategoryByFilename(__FILE__),
+which isn't too bad. All this trouble is due to the no-database approach.</p></div>            </div>
+
+    <div class="post-nav">
+                <br>
+                <a href="posts-2-raining.html">Next: Raining</a>
+            </div>
+
+</div>
+            </div>
+            <footer>EOF</footer>
+        </div>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </body>
+
+</html>
+

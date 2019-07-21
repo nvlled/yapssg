@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Planned features -- yapssg</title>
+
+    <link rel="stylesheet" href="resources/css/vendor/highlight.css">
+    <script src="resources/js/vendor/highlight.js"></script>
+    <link rel="stylesheet" href="resources/css/site.css" />
+
+    <head>
+        <div class="site-wrapper">
+            <header class="site-header">
+                <a class="site-name" href="index.html">yapssg</a>
+                <span class="site-desc">Yet Another PHP Static Site Generator</span>
+            </header>
+            <div class="site-content">
+                <div class="post-container">
+        <a href="index.html">Home</a>
+ >> <a href="posts.html">Posts</a>
+ >> <a href="posts-4-planned-features.html">Planned features</a>
+    <div class="post-title">Planned features</div>
+    <div class="post-description"></div>
+    <div class="post-date">Friday 19th of July 2019 04:38:49 AM</div>
+
+    <div class="post-content">
+                        <div class='markdown-content'><p>Just some braindump here.</p>
+<p>Let's see, I'm thinking of what to add next.
+It's working as it is, but it seems like there's
+something missing. Tags would be nice addition,
+maybe rss feed too. What about search? Sitemap?
+Breadcrumbs.</p>
+<p>It is still possible to add heirarchal content
+even if the page filesystem layout is flat.
+Maybe I could add something like:</p>
+<pre><code class="language-php">$sitemap = [
+    "blog" =&gt; [
+        "notes",
+        "life"
+    ],
+    "tutorials" =&gt; [
+        "javascript",
+        "go",
+    ],
+];</code></pre>
+<p>Hmm, yeah this would be a nice way to organize content.
+Pages under the javascript category would have the breadcrumb trail:</p>
+<pre><code>tutorials &gt;&gt; javascript &gt;&gt; page title 1
+tutorials &gt;&gt; javascript &gt;&gt; page title 2</code></pre>
+<hr />
+<p>For tags, I'd have a list a tags at the bottom of each post,
+then clicking them would go to a page where other posts
+with similar tags are shown. Or not, I may need to use js for
+this one.</p>
+<p>Here's another idea, why not make parse things in php tags
+<code>&lt;?php echo ('like this' ?&gt;</code>
+So the pipeline would be php -&gt; markdown -&gt; html</p>
+<p>Oh, I should add a formatter so the page source would be nicely formatted.</p>
+<p>Another thing, what if I need to link some internal pages in here...
+like this <a href="posts-1.html">oh crap</a>
+Well, nothing a regex can't fix. At least this is easier to do in
+markdown than in an PHP or HTML file.</p>
+<p>Lastly, if I would be post a bunch of code snippets here, I should find
+me some syntax highligher for php.</p></div>            </div>
+
+    <div class="post-nav">
+                <a href="posts-3-log.html">Previous: Log</a>
+                <br>
+                <a href="posts-5-added-features.html">Next: Added features</a>
+            </div>
+
+</div>
+            </div>
+            <footer>EOF</footer>
+        </div>
+        <script>hljs.initHighlightingOnLoad();</script>
+        </body>
+
+</html>
+
