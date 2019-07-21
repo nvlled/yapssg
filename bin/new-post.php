@@ -1,9 +1,10 @@
 #!/usr/bin/env php
 <?php
 chdir(dirname(dirname(__FILE__)));
-require_once ("lib/slug.php");
+require_once 'lib/slug.php';
 
-function nextID($category="post") {
+function nextID($category = 'posts')
+{
     $maxID = 0;
     foreach (glob("$category-*.php") as $filename) {
         $n = preg_match("/$category-([0-9]*).*\.php/", $filename, $m);
@@ -14,27 +15,30 @@ function nextID($category="post") {
         if ($maxID < $id) {
             $maxID = $id;
         }
-    };
+    }
+
     return $maxID + 1;
 }
 
-function postExists($id, $category="post") {
+function postExists($id, $category = 'posts')
+{
     foreach (glob("$category-$id-*.php") as $_) {
         return true;
     }
+
     return false;
 }
 
-$id = getenv("id");
-$title = addslashes(getenv("title"));
-$description = addslashes(@getenv("description"));
-$category = @getenv("category");
+$id = getenv('id');
+$title = addslashes(getenv('title'));
+$description = addslashes(@getenv('description'));
+$category = @getenv('category');
 $date = time();
 
 if (!$category) {
-    $category = "post";
+    $category = 'posts';
 }
-if (preg_match("/[^0-9a-zA-Z]/", $category)) {
+if (preg_match('/[^0-9a-zA-Z]/', $category)) {
     echo "category must consist of alphanumeric characters only.\n";
     exit;
 }
@@ -47,11 +51,10 @@ if (!$title) {
 
 if (!$id) {
     $id = nextID($category);
-} else if (preg_match("/[^0-9]/", $id)) {
+} elseif (preg_match('/[^0-9]/', $id)) {
     echo "id must be an +integer\n";
     exit;
 }
-
 
 if (postExists($id, $category)) {
     echo "$category id=$id is already used.\n";
@@ -69,6 +72,7 @@ renderPost([
     'title' => '$title',
     'date' => $date,
     'description' => '$description',
+    'draft' => false,
     'category' => getCategoryByFilename(__FILE__),
 ]);
 ";

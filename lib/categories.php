@@ -1,0 +1,6 @@
+<?php
+
+$categories = [
+    'posts' => [
+    ],
+];

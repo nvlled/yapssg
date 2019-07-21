@@ -85,7 +85,12 @@ footer {
 }
 
 code {
-    background-color: #224;
     padding: 2px;
+    background: #232323;
+    color: #e6e1dc;
 }
 
+.sitemap ul {
+    margin: 2px;
+    padding-left: 35px;
+}

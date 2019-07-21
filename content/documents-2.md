@@ -6,15 +6,25 @@
 
 # Quick Start
 
-1. ```$ git clone https://github.com/nvlled/yapssg your-site-name```
+1. ```sh
+$ git clone https://github.com/nvlled/yapssg your-site-name
+```
 
-1. ```$ cd your-site-name```
+1. ```sh
+$ cd your-site-name
+```
 
-1. ```change site details in config.php```
+1. ```sh
+change site details in config.php
+```
 
-1. ```$ title='Hello world' ./bin/new-post```
+1. ```sh
+$ title='Hello world' ./bin/new-post
+```
 
-1. Edit created markdown file in content/
+1. ```sh
+Edit created markdown file in content/
+```
 
 # Development
 The usual make-changes-then-F5 cycle applies while

@@ -7,42 +7,40 @@ function recurse_copy($src, $dst)
     @mkdir($dst);
     while (false !== ($file = readdir($dir))) {
         if (($file != '.') && ($file != '..')) {
-            if (is_dir($src . '/' . $file)) {
-                recurse_copy($src . '/' . $file, $dst . '/' . $file);
+            if (is_dir($src.'/'.$file)) {
+                recurse_copy($src.'/'.$file, $dst.'/'.$file);
             } else {
-                copy($src . '/' . $file, $dst . '/' . $file);
+                copy($src.'/'.$file, $dst.'/'.$file);
             }
         }
     }
     closedir($dir);
 }
 
-
-
 function main()
 {
-    require_once("lib/yapssg.php");
-    $GLOBALS["DEPLOY"] = true;
+    require_once 'lib/yapssg.php';
+    $GLOBALS['DEPLOY'] = true;
     $deploy = true;
     chdir(dirname(dirname(__FILE__)));
 
     $posts = postMap();
 
-    @mkdir("build");
+    @mkdir('build');
     echo "# rendering php to html\n";
-    foreach (glob("*.php") as $filename) {
+    foreach (glob('*.php') as $filename) {
         ob_start();
-        include($filename);
+        include $filename;
         $html = ob_get_contents();
         ob_end_clean();
 
         $filenameData = parsePageFilename($filename);
-        $category = @$filenameData["category"];
-        $postID = @$filenameData["id"];
+        $category = @$filenameData['category'];
+        $postID = @$filenameData['id'];
 
         $post = @$posts["$category-$postID"];
         if (!$post) {
-            $destFilename = preg_replace("/\\.php$/i", ".html", $filename);
+            $destFilename = preg_replace('/\\.php$/i', '.html', $filename);
         } else {
             $title = generateUrlSlug($post['title']);
             $destFilename = "$category-{$post['id']}-{$title}.html";
@@ -53,9 +51,8 @@ function main()
     echo "done\n";
 
     echo "# copying static resources\n";
-    system("rsync -h --update -v -r resources/ build/resources");
+    system('rsync -h --update -v -r resources/ build/resources');
     echo "done\n";
 }
-
 
 main();
