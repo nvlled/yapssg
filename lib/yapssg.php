@@ -173,6 +173,15 @@ function postlink($post)
 
 function sitelink($path)
 {
+    $postData = parsePageFilename($path);
+    if ($postData) {
+        $post = getPost($postData['category'], $postData['id']);
+
+        if ($post) {
+            return postlink($post);
+        }
+    }
+
     if ($path == 'home') {
         $path = 'index';
     }
@@ -185,7 +194,7 @@ function sitelink($path)
 
 function parsePageFilename($filename)
 {
-    $count = preg_match("/([0-9a-zA-Z]+)-([0-9])+\.php/", $filename, $m);
+    $count = preg_match("/([0-9a-zA-Z]+)-([0-9])+(\.php)?/", $filename, $m);
     if ($count == 0) {
         return null;
     }
